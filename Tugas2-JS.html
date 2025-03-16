@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Pegawai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 70%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-transform: uppercase;
+        }
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tbody tr:hover {
+            background-color: #e2e6ea;
+        }
+    </style>
+</head>
+<body>
+    <h2>Data Pegawai</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nama Pegawai</th>
+                <th>Umur</th>
+                <th>Jabatan</th>
+                <th>Status</th>
+                <th>Gaji Pokok</th>
+                <th>Tunjangan Jabatan</th>
+                <th>BPJS</th>
+                <th>Tunjangan Keluarga</th>
+                <th>Total Gaji</th>
+            </tr>
+        </thead>
+        <tbody id="pegawai-data"></tbody>
+        <tfoot id="total-gaji"></tfoot>
+    </table>
+
+    <script>
+        // Membuat objek pegawai dengan beberapa atribut
+        const pegawai = {
+            nama: "Dodi Prayodi", // Nama pegawai
+            umur: 25, // Umur pegawai
+            jabatan: "Manajer", // Jabatan pegawai
+            status: "Menikah" // Status pernikahan pegawai
+        };
+
+        let gajiPokok; // Variabel untuk menyimpan gaji pokok
+        
+        // Menentukan gaji pokok berdasarkan jabatan
+        if (pegawai.jabatan === "Manajer") gajiPokok = 15000000;
+        else if (pegawai.jabatan === "Asisten Manajer") gajiPokok = 10000000;
+        else if (pegawai.jabatan === "Staff") gajiPokok = 5000000;
+        else gajiPokok = 0; // Jika jabatan tidak terdaftar, gaji 0
+
+        // Menghitung tunjangan jabatan sebesar 15% dari gaji pokok
+        const tunjanganJabatan = 0.15 * gajiPokok;
+        
+        // Menghitung potongan BPJS sebesar 10% dari gaji pokok
+        const bpjs = 0.10 * gajiPokok;
+        
+        // Menghitung tunjangan keluarga jika pegawai menikah (20% dari gaji pokok)
+        const tunjanganKeluarga = pegawai.status === "Menikah" ? 0.20 * gajiPokok : 0;
+        
+        // Menghitung total gaji yang diterima
+        const totalGaji = gajiPokok + tunjanganJabatan - bpjs + tunjanganKeluarga;
+
+        // Menampilkan data pegawai di dalam tabel HTML
+        document.getElementById("pegawai-data").innerHTML = `
+            <tr>
+                <td>${pegawai.nama}</td> <!-- Nama Pegawai -->
+                <td>${pegawai.umur} tahun</td> <!-- Umur Pegawai -->
+                <td>${pegawai.jabatan}</td> <!-- Jabatan Pegawai -->
+                <td>${pegawai.status}</td> <!-- Status Pernikahan -->
+                <td>Rp ${gajiPokok.toLocaleString()}</td> <!-- Gaji Pokok -->
+                <td>Rp ${tunjanganJabatan.toLocaleString()}</td> <!-- Tunjangan Jabatan -->
+                <td>Rp ${bpjs.toLocaleString()}</td> <!-- Potongan BPJS -->
+                <td>Rp ${tunjanganKeluarga.toLocaleString()}</td> <!-- Tunjangan Keluarga -->
+                <td>Rp ${totalGaji.toLocaleString()}</td> <!-- Total Gaji -->
+            </tr>
+        `;
+    </script>
+</body>
+</html>
